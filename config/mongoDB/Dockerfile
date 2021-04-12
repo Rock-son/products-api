@@ -1,0 +1,2 @@
+FROM mongo:4.4.5-bionic@sha256:3eaf7d0b3de4e97d5e4c794e2cb43b402a1835c8ccc7b669d4a78d062a51b754
+

@@ -1,0 +1,19 @@
+# specify which files and directories in your project directory should not be copied over to the container
+node_modules
+client/node_modules
+client/src
+npm-debug.log
+**/*/Dockerfile
+.vscode
+.editorconfig
+.eslintignore
+.eslintrc
+.npmrc
+.prettierignore
+.prettierrc
+.gitignore
+.git
+# secrets
+**/*secret.txt
+**/*/.env
+**/*/.env_dev

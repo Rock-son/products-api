@@ -1,0 +1,73 @@
+version: "3.5"
+
+services:
+    # nodejs official img - https://hub.docker.com/_/node
+    api_server:
+        image: node_server:1.0
+        restart: always
+        container_name: api
+        build:
+            context: .
+            dockerfile: ./config/Node/Dockerfile
+            args:
+                NODE_ENV: development
+        ports:
+            - "3000:3000"
+            - "9229:9229"
+            - "9230:9230"
+        expose:
+            - "3000"
+        working_dir: /home/node/app
+        environment:
+        - NODE_ENV=production
+        command: >
+            sh -c "npm run start_dev"
+        # command: "dumb-init && npm run debug-w-docker"
+        env_file:
+            - ./config/Node/.env
+        networks:
+            - gateway
+        volumes:
+            - ./:/home/node/app
+            # bind-mounting these two files, we will be able to add packages during development without rebuilding
+            - ./package.json:/home/node/app/package.json
+            - ./package-lock.json:/home/node/app/package-lock.json
+            # this is a workaround to prevent host node_modules from accidently getting mounted in container
+            # in case one wants to use node/npm both outside container for test/lint etc. and also inside container
+            # this will overwrite the default node_modules dir in container so it won't conflict with our
+            # /home/node/app/node_modules location.
+            - notused_api_backend_dev:/home/node/app/node_modules
+        depends_on:
+            - mongo
+
+    # mongoDB - https://hub.docker.com/_/mongo-express
+    mongo:
+        image: mongo-express:1.0
+        restart: always
+        container_name: mongo
+        build:
+            context: .
+            dockerfile: ./config/mongoDB/Dockerfile
+        ports:
+            - "27017:27017"
+        env_file:
+            - ./config/mongoDB/.env
+        secrets:
+            - mongo_user
+            - mongo_password
+        volumes:
+            - mongo_data:/data/db
+        networks:
+            - gateway
+networks:
+    gateway:
+
+volumes:
+    notused_api_backend_dev:
+    mongo_data:
+secrets:
+    mongo_user:
+        file: ./config/mongoDB/username_secret.txt
+    mongo_password:
+        file: ./config/mongoDB/password_secret.txt
+
