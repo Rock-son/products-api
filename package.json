@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www.js",
     "start_dev": "NODE_ENV=development nodemon ./bin/www.js --watch server.js",
-    "test": "nodemon ./tests/server.js"
+    "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
+    "jest": "^26.6.3",
     "mongoose": "^5.12.3",
     "nodemon": "^2.0.7",
     "serve-favicon": "^2.5.0",
