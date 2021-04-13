@@ -53,10 +53,11 @@ services:
         env_file:
             - ./config/mongoDB/.env
         secrets:
-            - mongo_user
-            - mongo_password
+            - mongo_user_passwd
+            - mongo_root_passwd
         volumes:
             - mongo_data:/data/db
+            - ./config/mongoDB/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
         networks:
             - gateway
 networks:
@@ -66,8 +67,8 @@ volumes:
     notused_api_backend_dev:
     mongo_data:
 secrets:
-    mongo_user:
-        file: ./config/mongoDB/username_secret.txt
-    mongo_password:
-        file: ./config/mongoDB/password_secret.txt
+    mongo_user_passwd:
+        file: ./config/mongoDB/user_secret.txt
+    mongo_root_passwd:
+        file: ./config/mongoDB/root_secret.txt
 

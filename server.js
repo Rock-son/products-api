@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const path = require("path");
 const favicon = require('serve-favicon');
@@ -14,13 +16,13 @@ const product = require("./routes/product");
 
 const app = express();
 
-// `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CONTAINER_NAME}:27017/${process.env.MONGO_DB}`
-const dbConnectionString = `mongodb://${process.env.MONGO_CONTAINER_NAME}:27017`;
+const dbConnectionString = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CONTAINER_NAME}:27017/${process.env.MONGO_DB}`;
 mongoose.connect(dbConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
 /* ****************** middleware ************************** */
 // FAVICON
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
 // BODYPARSER
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: ["json", "application/json"] }));
 // SECURITY
 helmet(app);
