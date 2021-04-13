@@ -16,6 +16,7 @@ module.exports = function helmetFunc(app) {
 		upgradeInsecureRequests: true,
 		reportOnly: true,
 		reportUri: '/report-violation',
+		reportTo: '/report-violation',
 		safari5: false
 	}));
 };

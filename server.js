@@ -5,13 +5,13 @@ const path = require("path");
 const favicon = require('serve-favicon');
 const bodyParser = require("body-parser");
 // security
-const helmet = require("./config/utils/helmet.js");
+const helmet = require("./routes/security/helmet.js");
 // db
 const mongoose = require("mongoose");
 
 // routes & routing functions
-const getServerHealth = require("./config/utils/health");
-const reportViolation = require("./config/utils/health");
+const getServerHealth = require("./routes/health");
+const reportViolation = require("./routes/reportViolation");
 const product = require("./routes/product");
 
 const app = express();
