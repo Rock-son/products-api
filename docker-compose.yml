@@ -20,9 +20,8 @@ services:
         working_dir: /home/node/app
         environment:
         - NODE_ENV=production
-        command: >
-            sh -c "npm run start_dev"
-        # command: "dumb-init && npm run debug-w-docker"
+        command: sh -c "npm run start_dev"
+        #command: "npm run test"
         env_file:
             - ./config/Node/.env
         networks:
