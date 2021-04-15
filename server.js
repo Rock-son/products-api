@@ -17,7 +17,7 @@ const product = require("./routes/product");
 const app = express();
 
 const dbConnectionString = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CONTAINER_NAME}:27017/${process.env.MONGO_DB}`;
-mongoose.connect(dbConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(dbConnectionString, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 /* ****************** middleware ************************** */
 // FAVICON
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
