@@ -7,10 +7,10 @@ exports.gets = function getAllProducts() {
 	return ProductSchema.find({});
 };
 // POST
-exports.create = function postNewProduct({
-	name = "test",
-	price = 0,
-	available = true
+exports.createModel = function postNewProduct({
+	name,
+	price,
+	available
 }) {
 	const newProduct = new ProductSchema({
 		name,
@@ -19,9 +19,10 @@ exports.create = function postNewProduct({
 	});
 	return newProduct;
 };
-// GET ONE
-exports.getOne = function getOneProduct(id) {
-	return ProductSchema.find({ _id: id });
+// GET BY ID or NAME
+exports.getOne = function getOneProductById(id, name) {
+	const query = id == null ? { name } : { _id: id }; // query by id or name (since name is unique)
+	return ProductSchema.find(query);
 };
 
 // DELETE ONE
