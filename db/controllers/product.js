@@ -30,13 +30,23 @@ exports.deleteOne = function deleteOneProduct(id) {
 };
 
 // PUT i.e. REPLACE
-exports.replaceOne = function replaceOneProduct({
+exports.createOrUpdate = function createOrUpdateProduct({
 	id,
 	name,
-	price = 0,
-	available = true,
-	options = { new: true }
+	price,
+	available
 }) {
-
-	return ProductSchema.findOneAndReplace({ _id: id }, { name, price, available }, options); // option { new: true } returns updated object
+	const query = id == null ? { name } : {_id: id }; // query by id or name
+	return ProductSchema.findOneAndUpdate(query, 
+		{ 
+			name,
+			price,
+			available
+		},
+		// new: , upsert - creates new if it doesn't exist
+		{ 
+			new: true, 					// true - returns updated object
+			upsert: true, 				// creates the object if it doesn't exist
+			setDefaultsOnInsert: true	// if this and upsert are true, mongoose will apply the defaults specified in the model's schema
+		});
 };
