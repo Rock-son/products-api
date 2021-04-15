@@ -78,10 +78,10 @@ process.on('SIGUSR2', utils.exitHandler.bind(null, mongoConnection, {
 }));
 
 // catches uncaught exceptions
-process.on('uncaughtException', err => console.error("Api is loging uncaughtException", err));
+process.on('uncaughtException', err => console.error("Api is logging uncaughtException", err));
 
 
-process.on('unhandledRejection', err => console.error("Api is loging unhandledRejection", err));
+process.on('unhandledRejection', err => console.error("Api is logging unhandledRejection", err));
 
 
 module.exports = server;

@@ -15,28 +15,24 @@ const productSchema = new Schema({
 	},
 	price: {
 		type: Number, 
-		required: true
+		required: true,
+		default: 0
 	},
 	available: { 
 		type: Boolean, 
 		required: true, 
 		trim: true, 
 		default: false 
-	},
-	dateCreated: { 
-		type: Date, 
-		default: currentDate 
-	},
-	dateUpdated: { 
-		type: Date, 
-		default: currentDate 
 	}
+},
+{
+	timestamps: true
 });
 
-// UPDATE TIME
+/* UPDATE TIME
 productSchema.pre("save", function a(next) {
-	this.updatedUTC = new Date();
+	this.dateUpdated = new Date();
 	return next();
-});
+}); */
 
 module.exports.ProductSchema = mongoose.model("ProductSchema", productSchema, "product");

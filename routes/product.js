@@ -12,10 +12,10 @@ router.get("/products", async (req, res) => {
 });
 
 // POST NEW
-router.post("/product", async (req, res) => {
+router.post("/product", (req, res) => {
 	const { name, price, available } = req.body;
-	const newProduct = await product.create({ name, price, available });
-	await newProduct.save(function(err, doc) {
+	const productModel = product.createModel({ name, price, available });
+	productModel.save(function(err, doc) {
 		if (err) {
 			if (err.code && err.code === 11000) {
 				return res.status(400).send({ "error": "duplicate product" });
@@ -29,7 +29,7 @@ router.post("/product", async (req, res) => {
 
 // GET ONE
 router.get("/product/:id", async (req, res) => {
-	const { id } = req.params;
+	const { id, name } = req.params;
 	const data = await product.getOne(id);
 	res.send(data);
 });
@@ -40,7 +40,7 @@ router.delete("/product/:id", async (req, res) => {
 	try {
 		const data = await product.deleteOne(id);
 		res.send(data);
-	} catch (error) {
+	} catch (err) {
 		return res.status(400).send(err);
 	}	
 });
@@ -49,7 +49,8 @@ router.delete("/product/:id", async (req, res) => {
 router.put("/product", async (req, res) => {
 	const { id, name, price, available } = req.body;
 	try {
-		const newProduct = await product.replaceOne({ id, name, price, available });
+		// check for existing product, otherwise create one
+		const newProduct = await product.createOrUpdate({ id, name, price, available });
 		return res.status(200).send(newProduct);
 	} catch (err) {
 		if (err) {
