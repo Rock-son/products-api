@@ -15,14 +15,13 @@ const productSchema = new Schema({
 	},
 	price: {
 		type: Number, 
-		required: true,
+		required: false,
 		default: 0
 	},
 	available: { 
 		type: Boolean, 
-		required: true, 
-		trim: true, 
-		default: false 
+		required: false,
+		default: false
 	}
 },
 {

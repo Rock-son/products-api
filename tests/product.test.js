@@ -50,10 +50,10 @@ test("POST /api/product", async () => {
 	const newProduct = { name: "Product 3", price: 990, available: true };
 	await supertest(app).post(`/api/product`)
 		.send({ name: newProduct.name, price: newProduct.price, available: newProduct.available })
-	  	.expect(200)
+	  	.expect(201)
 	  	.then((response) => {
 			// Check status and type
-			expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(201);
 			expect(typeof response.body).toEqual("object");
 			// Check data
 			expect(response.body.name).toBe(newProduct.name);
@@ -67,10 +67,10 @@ test("POST /api/product with defaults", async () => {
 	const newProduct = { name: "Product 3"};
 	await supertest(app).post(`/api/product`)
 		.send({ name: newProduct.name })
-	  	.expect(200)
+	  	.expect(201)
 	  	.then((response) => {
 			// Check status and type
-			expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(201);
 			expect(typeof response.body).toEqual("object");
 			// Check data
 			expect(response.body.name).toBe(newProduct.name);
